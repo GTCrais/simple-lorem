@@ -67,7 +67,7 @@
 				<div class="col-12 col-lg-8 text-center">
 					&copy; {{ currentYear }} Simple Lorem by
 
-					<a v-if="linkToPortfolio" href="https://gtcrais.net" target="_blank">GTCrais</a>
+					<a v-if="linkToPortfolio" href="https://tmweb.dev" target="_blank">GTCrais</a>
 
 					<span v-else>GTCrais</span>
 
