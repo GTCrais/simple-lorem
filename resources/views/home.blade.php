@@ -11,7 +11,7 @@
 		<meta property="og:title" content="{{ $metaTitle }}" />
 		<meta property="og:type" content="website" />
 		<meta property="og:url" content="{{ request()->url() }}" />
-		<meta property="og:image" content="http://{{ request()->server("HTTP_HOST") }}/img/shareImg.png" />
+		<meta property="og:image" content="https://{{ request()->server("HTTP_HOST") }}/img/shareImg.png" />
 		<meta property="og:image:width" content="1200" />
 		<meta property="og:image:height" content="630" />
 		<meta property="og:description" content="{{ $metaDescription }}">
