@@ -18,7 +18,6 @@
 									 :composed-paragraph="composedSentences[index]"
 									 :index="index"
 									 :paragraph-count="paragraphs.length"
-									 :ref=""
 					>
 					</lorem-paragraph>
 
@@ -80,6 +79,9 @@
 </template>
 
 <script type="text/babel">
+	import Cookies from 'js-cookie';
+	import ClipboardManager from '../services/ClipboardManager.js';
+
 	export default {
 		props: [
 
@@ -100,27 +102,26 @@
 
 		methods: {
 			reset: function() {
-				this.$cookie.delete('slparagraphs');
+				Cookies.remove('slparagraphs');
 				this.paragraphsCookie = null;
 				this.$store.commit('removeParagraphs');
 				this.setDefaultParagraphs();
 			},
 
 			saveSettings: function() {
-				this.$cookie.set('slparagraphs', JSON.stringify(this.paragraphs), { expires: '2Y' });
+				Cookies.set('slparagraphs', JSON.stringify(this.paragraphs), { expires: 365 * 2 });
 				this.setParagraphsCookie();
 			},
 
 			copyAll: function() {
-				let comp = this;
 				let text = this.composedSentences.join("\n\n");
 
-				this.$copyText(text).then(function (e) {
-					eventHub.$emit('copied-all');
-				}, function (e) {
+				ClipboardManager.copy(text).then(function () {
+					eventHub.emit('copied-all');
+				}, function () {
 					setTimeout(function() {
-						comp.$copyText(text).then(function (e) {
-							eventHub.$emit('copied-all');
+						ClipboardManager.copy(text).then(function () {
+							eventHub.emit('copied-all');
 						}, function (e) {
 							console.error(e);
 						});
@@ -154,11 +155,11 @@
 			},
 
 			setParagraphsCookie: function() {
-				this.paragraphsCookie = this.$cookie.get('slparagraphs');
+				this.paragraphsCookie = Cookies.get('slparagraphs');
 			},
 
 			setModeCookie: function() {
-				this.modeCookie = this.$cookie.get('slmode');
+				this.modeCookie = Cookies.get('slmode');
 			},
 
 			getReducedParagraphIndex: function(index) {
@@ -173,7 +174,7 @@
 
 			toggleMode: function() {
 				this.$store.commit('toggleMode');
-				this.$cookie.set('slmode', this.$store.getters.mode, { expires: '2Y' });
+				Cookies.set('slmode', this.$store.getters.mode, { expires: 365 * 2 });
 			},
 
 			setInitMode: function() {
@@ -247,11 +248,11 @@
 		},
 
 		created: function() {
-			eventHub.$on('save-settings', this.saveSettings);
+			eventHub.on('save-settings', this.saveSettings);
 		},
 
-		beforeDestroy: function() {
-			eventHub.$off('save-settings', this.saveSettings);
+		beforeUnmount: function() {
+			eventHub.off('save-settings', this.saveSettings);
 		}
 	}
 </script>

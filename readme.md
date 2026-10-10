@@ -2,8 +2,19 @@
 
 This is source code for [simplelorem.com](https://www.simplelorem.com/)
 
-To set up locally you may optionally change environment to `localdev` in `app/bootstrap/env.php`, and then put 
-whatever config you want to overwrite in `config.localdev` folder.
+## Local setup
+
+Requires PHP 8.4+, Composer, Node.js 20.19+ and [pnpm](https://pnpm.io/).
+
+```bash
+composer install
+cp .env.example .env
+php artisan key:generate
+pnpm install
+pnpm run build
+```
+
+Then adjust `.env` to your environment. Use `pnpm run dev` instead of `pnpm run build` to run the Vite dev server with hot reloading.
 
 ## License
 

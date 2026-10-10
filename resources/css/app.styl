@@ -39,6 +39,8 @@ a
 
 .btn
   border 2px solid transparent
+  // Bootstrap's own .btn transition, repeated here so it also runs when the OS asks for reduced motion
+  transition color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out
   
   &.disabled
     cursor default
@@ -121,17 +123,18 @@ a
           position fixed
           top calc(50vh - 57px - 52px)
         
+        // Icons inherit the button's background through .icon-container, so they always change color together with it
         .icon-container
           display block
           width 60px
           height 65px
           position relative
+          background-color inherit
         
         i
           transform scale(-1, 1)
           position absolute
-          background-color white
-          transition background-color 0.15s ease-in-out
+          background-color inherit
           
           &.first
             z-index 5
@@ -210,16 +213,10 @@ a
         &.btn-copy-all
           &:hover
             background-color successColor
-    
-            i
-              background-color successColor
               
           &:active
             border-color #28a745 !important
             background-color #28a745
-          
-            i
-              background-color #28a745
         
     &.dark-mode
       background-color backgroundColorDark
@@ -246,22 +243,13 @@ a
       .control-button
         &.btn-copy-all
           background-color backgroundColorDark
-          
-          i
-            background-color backgroundColorDark
             
           &:hover
             background-color successColorDark
-    
-            i
-              background-color successColorDark
               
           &:active
             border-color successActiveColor !important
             background-color successActiveColor
-    
-            i
-              background-color successActiveColor
               
       p
         border 5px solid backgroundColorDark

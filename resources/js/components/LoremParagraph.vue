@@ -8,8 +8,7 @@
 			<button type="button"
 					title="Copy"
 					class="btn btn-outline-success btn-copy control-button"
-					v-clipboard:copy="composedParagraph"
-					v-clipboard:success="flashParagraph"
+					@click="copyParagraph"
 			>
 				<i class="fa fa-copy"></i>
 			</button>
@@ -42,6 +41,8 @@
 </template>
 
 <script>
+	import ClipboardManager from '../services/ClipboardManager.js';
+
 	export default {
 		props: [
 			'paragraph',
@@ -62,6 +63,12 @@
 		},
 
 		methods: {
+			copyParagraph() {
+				ClipboardManager.copy(this.composedParagraph).then(this.flashParagraph, function (e) {
+					console.error(e);
+				});
+			},
+
 			flashParagraph(e) {
 				clearTimeout(this.flashTimeout);
 				this.paragraphClass = '';
@@ -78,7 +85,7 @@
 					action: 'increase'
 				});
 
-				eventHub.$emit('save-settings');
+				eventHub.emit('save-settings');
 			},
 
 			reduceSentences() {
@@ -91,7 +98,7 @@
 					action: 'reduce'
 				});
 
-				eventHub.$emit('save-settings');
+				eventHub.emit('save-settings');
 			},
 
 			removeParagraph() {
@@ -101,7 +108,7 @@
 
 				this.$store.commit('removeParagraph', this.index);
 
-				eventHub.$emit('save-settings');
+				eventHub.emit('save-settings');
 			}
 		},
 
@@ -116,11 +123,11 @@
 		},
 
 		created: function() {
-			eventHub.$on('copied-all', this.flashParagraph);
+			eventHub.on('copied-all', this.flashParagraph);
 		},
 
-		beforeDestroy: function() {
-			eventHub.$off('copied-all', this.flashParagraph);
+		beforeUnmount: function() {
+			eventHub.off('copied-all', this.flashParagraph);
 		}
 	}
 </script>

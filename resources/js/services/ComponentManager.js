@@ -1,14 +1,15 @@
 
 class ComponentManager
 {
-	static registerComponents()
+	static registerComponents(app)
 	{
 		let components = {};
-		const files = require.context('../', true, /\.vue$/i);
+		const files = import.meta.glob('../**/*.vue', { eager: true });
 
-		files.keys().map(function(key) {
+		Object.keys(files).map(function(key) {
 			let componentName = key.split('/').pop().split('.')[0];
-			components[componentName] = Vue.component(componentName, files(key).default);
+			components[componentName] = files[key].default;
+			app.component(componentName, components[componentName]);
 		});
 
 		return components;

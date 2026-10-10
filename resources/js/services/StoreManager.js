@@ -1,9 +1,11 @@
 
+import { createStore } from 'vuex';
+
 class StoreManager
 {
 	static setupStore()
 	{
-		return new Vuex.Store({
+		return createStore({
 			state: Object.assign(
 				StoreManager.storeState()
 			),

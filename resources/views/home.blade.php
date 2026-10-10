@@ -19,18 +19,13 @@
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:400" rel="stylesheet">
 
-		<link href="/css/vendor.css?v={{ config('assetversioning.app.cssVendors') }}" rel="stylesheet"/>
-		<link href="/css/app.css?v={{ config('assetversioning.app.css') }}" rel="stylesheet"/>
+		@vite(['resources/css/vendor.css', 'resources/css/app.styl', 'resources/js/App.js'])
 
 		<link rel="icon" href="/img/favicon.png" type="image/x-icon">
     </head>
     <body>
 
-		<div id="vue-wrapper" class="d-flex justify-content-center">
-
-			<app></app>
-
-		</div>
+		<div id="vue-wrapper" class="d-flex justify-content-center"></div>
 
 		@if (app()->environment() == 'production')
 
@@ -48,10 +43,6 @@
 
 
 		<script> var currentYear = {{ date('Y') }}; var ltp = !!{{ config('c.linkToPortfolio') ? 1 : 0 }}; </script>
-
-		<script src="/js/manifest.js?v={{ config('assetversioning.app.js') }}"></script>
-		<script src="/js/vendor.js?v={{ config('assetversioning.app.jsVendors') }}"></script>
-		<script src="/js/app.js?v={{ config('assetversioning.app.js') }}"></script>
 
     </body>
 </html>

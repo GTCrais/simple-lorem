@@ -1,23 +1,16 @@
 
-require('./bootstrap/libraries.js');
+import { createApp } from 'vue';
+import mitt from 'mitt';
 
-Vue.use(VueCookie);
-Vue.use(VueClipboard);
-Vue.use(Vuex);
-
-window.eventHub = new Vue();
-
+import App from './components/App.vue';
 import ComponentManager from './services/ComponentManager.js';
 import StoreManager from './services/StoreManager.js';
 
-window.store = StoreManager.setupStore();
-ComponentManager.registerComponents();
+window.eventHub = mitt();
 
-window.eventHub = new Vue();
+const app = createApp(App);
 
-const app = new Vue({
+app.use(StoreManager.setupStore());
+ComponentManager.registerComponents(app);
 
-	el: '#vue-wrapper',
-	store: store
-
-});
+app.mount('#vue-wrapper');
