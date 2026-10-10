@@ -70,7 +70,7 @@
 
 					<span v-else>GTCrais</span>
 
-					:: View on <a href="https://github.com/GTCrais/SimpleLorem" target="_blank">GitHub</a>
+					:: View on <a href="https://github.com/GTCrais/simple-lorem" target="_blank">GitHub</a>
 				</div>
 			</footer>
 		</div>
